@@ -1,0 +1,40 @@
+#!/bin/bash
+
+ADDON_LABEL="Chaos PostgreSQL"
+ADDON_DESC="Provide PostgreSQL account."
+
+ADDON_NAME=( 'chaos-postgresql' )
+ADDON_PLAN=( 'basic' )
+
+SUPPORTED_NAMES=( 'heroku-postgresql' 'chaos-postgresql' )
+SUPPORTED_PLANS=( 'dev' 'basic' 'crane' 'kappa' 'ronin' 'fugu' 'ika' 'zilla' 'baku' 'mecha' )
+
+is_supported(){
+  read addon_name addon_plan <<<$(IFS=":"; echo $1)
+  for name in "${SUPPORTED_NAMES[@]}"; do
+    if [[ "$name" == "$addon_name" ]]; then
+      for plan in "${SUPPORTED_PLANS[@]}"; do
+        if [[ "$plan" == "$addon_plan" ]]; then
+          echo $ADDON_LABEL
+          return 0
+        fi
+      done
+    fi
+  done
+
+  return 1
+}
+
+about(){
+  echo -n "${ADDON_LABEL}: ${ADDON_DESC} ( "
+  for plan in "${ADDON_PLAN[@]}"; do
+    echo -n "${ADDON_NAME}:${plan} "
+  done
+  echo ")"
+}
+
+if [[ "$1" == "--about" ]]; then
+  about
+else
+  is_supported $1
+fi
