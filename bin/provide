@@ -12,6 +12,20 @@ sql(){
   sudo -u $POSTGRES_USER psql --command "$command" &> /dev/null
 }
 
+# Load the cache to find if an app already has credentials
+# If a cache file is found print the DATABASE_URL
+load_cache(){
+  tmp=$(dirname $0)/../tmp
+  mkdir -p ${tmp}/credentials
+  for cached in ${tmp}/credentials/*; do
+    if [ "$(basename $cached)" == "$app" ]; then
+      echo $(cat $cached)
+      return 0
+    fi
+  done
+  return 1
+}
+
 # Create a database and an associed user account
 create_account(){
   name=$1
@@ -21,10 +35,15 @@ create_account(){
   sql "GRANT ALL PRIVILEGES ON DATABASE ${name} TO ${name};"
 }
 
-# Generate and print the DATABASE_URL env var
+# Generate and print the DATABASE_URL env var.
+# Cache the credential as well.
 print_database_url(){
-  echo "DATABASE_URL=postgres://${name}:${password}@${SERVICE_POSTGRESQL_HOST:=127.0.0.1}/${name}"
+  url="DATABASE_URL=postgres://${name}:${password}@${SERVICE_POSTGRESQL_HOST:=127.0.0.1}/${name}"
+  echo $url > $tmp/credentials/$app
+  echo $url
 }
 
-create_account $app
-print_database_url
+if ! load_cache $app; then
+  create_account $app
+  print_database_url
+fi
