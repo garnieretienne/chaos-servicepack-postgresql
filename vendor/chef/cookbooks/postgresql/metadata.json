@@ -39,7 +39,8 @@
     "postgresql::client": "Installs postgresql client package(s)",
     "postgresql::server": "Installs postgresql server packages, templates",
     "postgresql::server_redhat": "Installs postgresql server packages, redhat family style",
-    "postgresql::server_debian": "Installs postgresql server packages, debian family style"
+    "postgresql::server_debian": "Installs postgresql server packages, debian family style",
+    "postgresql::sudo": "Ask sudo to allow addons user to exec psql commands"
   },
   "version": "2.2.2"
 }

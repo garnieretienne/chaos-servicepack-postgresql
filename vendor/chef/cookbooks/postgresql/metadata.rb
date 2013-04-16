@@ -11,6 +11,7 @@ recipe            "postgresql::client", "Installs postgresql client package(s)"
 recipe            "postgresql::server", "Installs postgresql server packages, templates"
 recipe            "postgresql::server_redhat", "Installs postgresql server packages, redhat family style"
 recipe            "postgresql::server_debian", "Installs postgresql server packages, debian family style"
+recipe            "postgresql::sudo", "Ask sudo to allow addons user to exec psql commands"
 
 %w{ubuntu debian fedora suse amazon}.each do |os|
   supports os
