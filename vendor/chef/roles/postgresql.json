@@ -11,7 +11,8 @@
   "description": "Install Chaos PostgreSQL servicepack.",
   "chef_type": "role",
   "run_list": [
-    "recipe[postgresql::server]"
+    "recipe[postgresql::server]",
+    "recipe[postgresql::sudo]"
    ]
 }
 
