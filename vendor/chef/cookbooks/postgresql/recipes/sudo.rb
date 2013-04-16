@@ -4,6 +4,6 @@ template "postgresql sudo" do
   source "sudo.erb"
   owner "root"
   group "root"
-  mode "0600"
+  mode "0440"
   action :create
 end
