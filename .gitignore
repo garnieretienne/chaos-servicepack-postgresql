@@ -1,2 +1,2 @@
 tmp/*
-!tmp/.gitme
+!tmp/credentials/.gitme
