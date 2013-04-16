@@ -1,3 +1,4 @@
 tmp/*
 !tmp/credentials
 !tmp/credentials/.gitme
+vendor/chef/tmp/
