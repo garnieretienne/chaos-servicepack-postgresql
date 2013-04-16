@@ -1,0 +1,30 @@
+#!/bin/bash
+set -e
+
+# This script provide a PostgreSQL account and echo a DATABASE_URL variable with database access
+POSTGRES_USER=postgres
+
+app=$1
+
+# Execute an SQL command
+sql(){
+  local command=$1
+  sudo -u $POSTGRES_USER psql --command "$command" &> /dev/null
+}
+
+# Create a database and an associed user account
+create_account(){
+  name=$1
+  password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c10)
+  sql "CREATE USER ${name} WITH PASSWORD '${password}';"
+  sql "CREATE DATABASE ${name};"
+  sql "GRANT ALL PRIVILEGES ON DATABASE ${name} TO ${name};"
+}
+
+# Generate and print the DATABASE_URL env var
+print_database_url(){
+  echo "DATABASE_URL=postgres://${name}:${password}@${SERVICE_POSTGRESQL_HOST:=127.0.0.1}/${name}"
+}
+
+create_account $app
+print_database_url
