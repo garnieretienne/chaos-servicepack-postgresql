@@ -1,36 +1,44 @@
 #!/bin/bash
 
-ADDON_LABEL="Chaos PostgreSQL"
-ADDON_DESC="Provide PostgreSQL account."
+ADDON_LABEL="Chaos PostgreSQL service"
+ADDON_DESC="Provide a PostgreSQL database and a dedicated account."
 
-ADDON_NAME=( 'chaos-postgresql' )
-ADDON_PLAN=( 'basic' )
+declare -A ADDON_PLANS
+ADDON_PLANS=( \
+['chaos-postgresql:full']='Postgresql database with dedicted account (no restriction)' \
+['heroku-postgresql:dev']='Provide the "chaos-postgresql:full" plan (heroku support)' \
+)
 
-SUPPORTED_NAMES=( 'heroku-postgresql' 'chaos-postgresql' )
-SUPPORTED_PLANS=( 'dev' 'basic' 'crane' 'kappa' 'ronin' 'fugu' 'ika' 'zilla' 'baku' 'mecha' )
-
+# Tell if an addon plan is supported
 is_supported(){
-  read addon_name addon_plan <<<$(IFS=":"; echo $1)
-  for name in "${SUPPORTED_NAMES[@]}"; do
-    if [[ "$name" == "$addon_name" ]]; then
-      for plan in "${SUPPORTED_PLANS[@]}"; do
-        if [[ "$plan" == "$addon_plan" ]]; then
-          echo $ADDON_LABEL
-          return 0
-        fi
-      done
+  local addon_plan=$1
+
+  for plan in "${!ADDON_PLANS[@]}"; do 
+    if [ "$plan" == "$addon_plan" ]; then
+      echo $ADDON_LABEL
+      return 0
     fi
   done
 
   return 1
 }
 
+# Addon description
 about(){
-  echo -n "${ADDON_LABEL}: ${ADDON_DESC} ( "
-  for plan in "${ADDON_PLAN[@]}"; do
-    echo -n "${ADDON_NAME}:${plan} "
+  local addon_plans=""
+
+  for plan in "${!ADDON_PLANS[@]}"; do
+    addon_plans="${addon_plans}- $plan\t ${ADDON_PLANS["$plan"]} \n    "
   done
-  echo ")"
+
+  local description=$(cat << EOD
+$ADDON_LABEL:
+  $ADDON_DESC
+  Plans:
+    $addon_plans
+EOD
+)
+  echo -e "$description"
 }
 
 if [[ "$1" == "--about" ]]; then
