@@ -5,7 +5,7 @@ ADDON_DESC="Provide a PostgreSQL database and a dedicated account."
 
 declare -A ADDON_PLANS
 ADDON_PLANS=( \
-['chaos-postgresql:full']='Postgresql database with dedicted account (no restriction)' \
+['chaos-postgresql:full']='Postgresql database with a dedicated account (no restriction)' \
 ['heroku-postgresql:dev']='Provide the "chaos-postgresql:full" plan (heroku support)' \
 )
 
