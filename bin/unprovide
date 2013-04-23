@@ -12,15 +12,22 @@ sql(){
   sudo -u $POSTGRES_USER psql --command "$command" &> /dev/null
 }
 
+# Delete an user account.
+# Databases for this user must be deleted first.
 delete_account(){
   sql "DROP USER ${app};"
 }
 
+# Drop all open connection and delete the database.
+# See: http://blog.gahooa.com/2010/11/03/how-to-force-drop-a-postgresql-database-by-killing-off-connection-processes/
 delete_database(){
+  sql "SELECT pg_terminate_backend(procpid) FROM pg_stat_activity WHERE datname='${app}';"
   sql "DROP DATABASE ${app};"
 }
 
+# Delete cached credentials (tmp/credentials/appname).
 delete_cache(){
+  local tmp=$(dirname $0)/../tmp
   rm -f "${tmp}/credentials/${app}"
 }
 
