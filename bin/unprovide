@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+# This script provide a PostgreSQL account and echo a DATABASE_URL variable with database access
+POSTGRES_USER=postgres
+
+app=$1
+
+# Execute an SQL command
+sql(){
+  local command=$1
+  sudo -u $POSTGRES_USER psql --command "$command" &> /dev/null
+}
+
+delete_account(){
+  sql "DROP USER ${app};"
+}
+
+delete_database(){
+  sql "DROP DATABASE $(app);"
+}
+
+delete_database
+delete_account
