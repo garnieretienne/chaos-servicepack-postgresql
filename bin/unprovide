@@ -20,5 +20,10 @@ delete_database(){
   sql "DROP DATABASE ${app};"
 }
 
+delete_cache(){
+  rm -f "${tmp}/credentials/${app}"
+}
+
 delete_database
 delete_account
+delete_cache
