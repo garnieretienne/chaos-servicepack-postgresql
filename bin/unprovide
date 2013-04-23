@@ -17,7 +17,7 @@ delete_account(){
 }
 
 delete_database(){
-  sql "DROP DATABASE $(app);"
+  sql "DROP DATABASE ${app};"
 }
 
 delete_database
