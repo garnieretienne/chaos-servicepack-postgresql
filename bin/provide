@@ -38,7 +38,7 @@ create_account(){
 # Generate and print the DATABASE_URL env var.
 # Cache the credential as well.
 print_database_url(){
-  url="DATABASE_URL=postgres://${name}:${password}@${SERVICE_POSTGRESQL_HOST:=127.0.0.1}/${name}"
+  url="DATABASE_URL=postgres://${name}:${password}@${POSTGRESQL_CONFIG_LISTEN-ADDRESSES:=127.0.0.1}/${name}"
   echo $url > $tmp/credentials/$app
   echo $url
 }
