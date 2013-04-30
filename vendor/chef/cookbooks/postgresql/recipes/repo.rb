@@ -2,9 +2,9 @@
 
 # Install PGDG apt repository
 # See: https://wiki.postgresql.org/wiki/Apt
-template "dotdeb.list" do
+template "pgdg.list" do
   path "/etc/apt/sources.list.d/pgdg.list"
-  source "pgdg.list"
+  source "pgdg.list.erb"
   owner "root"
   group "root"
   mode 0644
