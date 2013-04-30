@@ -16,8 +16,8 @@ end
 template "postgresql conf" do
   path "/etc/postgresql/9.2/main/postgresql.conf"
   source "postgresql.conf.erb"
-  owner "root"
-  group "root"
+  owner "postgres"
+  group "postgres"
   mode 0600
   notifies :restart, 'service[postgresql]', :immediately
 end
