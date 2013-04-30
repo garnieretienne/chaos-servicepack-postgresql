@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# This script provide a PostgreSQL account and echo a DATABASE_URL variable with database access
+# This script unprovide a PostgreSQL account and it's databases
 POSTGRES_USER=postgres
 
 app=$1
