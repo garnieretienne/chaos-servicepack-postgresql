@@ -1,7 +1,7 @@
 {
   "name": "postgresql",
   "json_class": "Chef::Role",
-  "description": "Install Chaos PostgreSQL servicepack.",
+  "description": "Install Chaos PostgreSQL Servicepack.",
   "chef_type": "role",
   "run_list": [
     "recipe[postgresql::repo]",
