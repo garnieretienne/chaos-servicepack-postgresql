@@ -39,7 +39,7 @@ create_account(){
 # Cache the credential as well.
 print_database_url(){
   url="DATABASE_URL=postgres://${name}:${password}@${POSTGRESQL_ADDRESSES:=127.0.0.1}:${POSTGRESQL_PORT:=5432}/${name}"
-  echo $url > $tmp/credentials/$app
+  echo $url > $tmp/credentials/$app && chmod 0600 $tmp/credentials/$app
   echo $url
 }
 

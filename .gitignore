@@ -1,4 +1,2 @@
-tmp/*
-!tmp/credentials
-!tmp/credentials/.gitme
-vendor/chef/tmp/
+tmp/* # A temp directory can be used in order to manage servicepack data
+env   # File used to store user configuration variables
