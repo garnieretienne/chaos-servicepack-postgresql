@@ -5,7 +5,8 @@
   "chef_type": "role",
   "run_list": [
     "recipe[postgresql::repo]",
-    "recipe[postgresql::sudo]"
+    "recipe[postgresql::sudo]",
+    "recipe[postgresql::server]"
    ]
 }
 
